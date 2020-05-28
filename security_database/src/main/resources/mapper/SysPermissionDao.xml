@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.cn.security_database.dao.SysPermissionDao">
+    <resultMap id="BaseResultMap" type="com.study.cn.security_database.entity.SysPermission">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="descritpion" jdbcType="VARCHAR" property="descritpion"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="pid" jdbcType="INTEGER" property="pid"/>
+        <result column="method" jdbcType="VARCHAR" property="method"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, `name`, descritpion, url, pid, `method`
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_permission
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.study.cn.security_database.entity.SysPermission" useGeneratedKeys="true">
+    insert into sys_permission (`name`, descritpion, url, 
+      pid, `method`)
+    values (#{name,jdbcType=VARCHAR}, #{descritpion,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{pid,jdbcType=INTEGER}, #{method,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.study.cn.security_database.entity.SysPermission" useGeneratedKeys="true">
+        insert into sys_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="descritpion != null">
+                descritpion,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="method != null">
+                `method`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="descritpion != null">
+                #{descritpion,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=INTEGER},
+            </if>
+            <if test="method != null">
+                #{method,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.study.cn.security_database.entity.SysPermission">
+        update sys_permission
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="descritpion != null">
+                descritpion = #{descritpion,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=INTEGER},
+            </if>
+            <if test="method != null">
+                `method` = #{method,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.study.cn.security_database.entity.SysPermission">
+    update sys_permission
+    set `name` = #{name,jdbcType=VARCHAR},
+      descritpion = #{descritpion,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=INTEGER},
+      `method` = #{method,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="findAll" parameterType="int" resultType="com.study.cn.security_database.entity.SysPermission">
+            SELECT * from Sys_permission
+    </select>
+
+    <select id="findByAdminUserId" parameterType="int" resultType="com.study.cn.security_database.entity.SysPermission">
+ select p.*
+        from Sys_User u
+        LEFT JOIN sys_role_user sru on u.id= sru.Sys_User_id
+        LEFT JOIN Sys_Role r on sru.Sys_Role_id=r.id
+        LEFT JOIN Sys_permission_role spr on spr.sys_role_id=r.id
+        LEFT JOIN Sys_permission p on p.id =spr.sys_permission_id
+        where u.id=#{userId}
+    </select>
+
+    <select id="findByAdminRoleId" parameterType="int" resultType="com.study.cn.security_database.entity.SysPermission">
+select  p.* from sys_role r
+left join sys_permission_role rp on r.id=rp.sys_role_id
+left join sys_permission p on rp.sys_permission_id=p.id
+        where r.id=#{roleId}
+    </select>
+
+</mapper>

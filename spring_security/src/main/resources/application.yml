@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: spring_security
+    # 安全认证 密码用户
+  security:
+    user:
+      name: admin
+      password: 123
+  datasource:
+    username: root
+    password: sasa
+    url: jdbc:mysql://localhost:3306/cloud?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+  #main:
+    #allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
+server:
+  port: 8080
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.study.cn.spring_security.entity  #别名
+  #开启驼峰命名
+  configuration:
+    map-underscore-to-camel-case: true
+#showSql
+logging:
+  level:
+    com:
+      example:
+        mapper : debug

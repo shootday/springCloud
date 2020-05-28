@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: springcloud-admin
+  # 邮件设置
+  mail:
+    host: smtp.qq.com
+    username: 2509254166
+    password: kjjgtfrrbdljdjea #在qq邮箱的设置里面开启POP3/SMTP服务 然后有个码
+    properties:
+      mail:
+        smpt:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  boot:
+    admin:
+      notify:
+        mail:
+          from: 2509254166@qq.com # 发件邮箱  跟上面的username一致
+          to: 2509254166@qq.com  #收件邮箱
+server:
+  port: 5000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/ #http://admin:123@localhost:8000/eureka/   #集群 http://localhost:8001/eureka/,http://localhost:8002/eureka/,http://localhost:8000/eureka/

@@ -1,0 +1,44 @@
+##eureka 集群     这种需要jar启动  指定  java -jar xxx.jar --spring.profiles.active=server1
+##spring:
+#  application:
+#    name: springcloud-eureka
+#  profiles: server1   #启动  java -jar xxx.jar --spring.profiles.active=server1
+#server:
+#  port: 8000
+#eureka:
+#  instance:
+#    hostname: server1   #自己本地在hosts文件中配置 server1
+#    prefer-ip-address: false
+#  client:
+#    service-url:
+#      defaultZone: http://server2:8001/eureka/,http://server3:8002/eureka/
+#
+#---
+#spring:
+#  application:
+#    name: springcloud-eureka
+#  profiles: server2
+#server:
+#  port: 8001
+#eureka:
+#  instance:
+#    hostname: server2
+#    prefer-ip-address: false
+#  client:
+#    service-url:
+#      defaultZone: http://server1:8000/eureka/,http://server3:8002/eureka/
+#
+#---
+#spring:
+#  application:
+#    name: springcloud-eureka
+#  profiles: server3
+#server:
+#  port: 8002
+#eureka:
+#  instance:
+#    hostname: server3
+#    prefer-ip-address: false
+#  client:
+#    service-url:
+#      defaultZone: http://server1:8000/eureka/,http://server2:8001/eureka/

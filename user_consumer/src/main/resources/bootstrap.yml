@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: user-consumer
+ #===============config clinet   当前配置文件改成bootstrap.yml 才能注入成功===================
+  #注意当前服务叫 user-consumer 所以配置中心的文件名必须叫做user-consumer-{dev/prod} 才能读取的到
+  cloud:   #通过 http://laptop-meicvj3d:3000/actuator/refresh 刷新配置
+    config:
+      profile: master #哪个配置文件
+      label: master #分支
+      #uri: http://localhost:5000 #根据url查找
+      discovery:  #通过eureka查找
+        enabled: true
+        service-id: springcloud-config
+  #使用rabbitmq来通知当前服务多个节点之间获取config的配置文件刷新，不然每个服务掉一次接口很费劲
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+server:
+  port: 3001
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/ #http://admin:123@localhost:8000/eureka/   #集群 http://localhost:8001/eureka/,http://localhost:8002/eureka/,http://localhost:8000/eureka/
+
+
+ #开启所有上报端口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+
+
+
+
+

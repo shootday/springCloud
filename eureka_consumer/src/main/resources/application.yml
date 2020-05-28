@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: eureka-consumer
+server:
+  port: 6009
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/    #集群 http://localhost:8001/eureka/,http://localhost:8002/eureka/,http://localhost:8000/eureka/
+
+#负载均衡策略 eureka-provider服务名
+eureka-provider:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+#ribbon 脱离eureka
+#ribbon:
+#  eureka:
+#    enabled: false
+#  listOfServers: localhost:7000  #具体服务地址
+
+
+#spring:
+#  profiles:
+#    active: c1
+

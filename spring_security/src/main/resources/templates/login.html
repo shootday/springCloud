@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="/login" method="post">
+    用户名：<input type="text" name="username"><br>
+    密码：<input type="password" name="password"><br>
+    <!--下发的token  <input  th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+    验证码：<input type="text" name="code"><img id="img" src="/kaptcha" onclick="imgOnclick()"/><br>
+    <button type="submit" name="submit" value="登录">登录</button>
+</form>
+
+</body>
+<script src="/js/jquery-3.2.0.min.js"></script>
+<script>
+    function imgOnclick() {
+        $("#img").attr("src", "/kaptcha");
+    }
+</script>
+</html>

@@ -1,0 +1,75 @@
+spring:
+  application:
+    name: springcloud-zuul
+server:
+  port: 4001
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/ #http://admin:123@localhost:8000/eureka/   #集群 http://localhost:8001/eureka/,http://localhost:8002/eureka/,http://localhost:8000/eureka/4
+
+
+#负载均衡策略 user-provider服务名
+user-consumer:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+  #调试的时候，看网关请求的地址，以及 映射是否正确。网关请求有误时，可以通过此处排查错误。
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+    routes:
+      enabled: true
+
+
+
+    #zull不配置默认也可以通过服务名进行访问
+
+######################## 路由指定:服务指定 1  #############################
+##将路径的/consumer/引到 eureka 的 user-consumer 服务 上
+##规则：zuul.routes.路径名.path ##规则：zuul.routes.路径名.serviceId=eureka 的服务名
+#
+#zuul:
+#  #prefix: /home #zuul网关访问服务的一个路径前缀
+#  routes:
+#    consumer: #自定义路由名
+#      path: /consumer/**   #zuul网关访问服务的一个路径
+#      serviceId: user-consumer  #所要访问的服务对应的注册中心的名称
+#      #strip-prefix: false
+#    provider: #自定义路由名
+#      path: /provider/**
+#      serviceId: user-provider
+#      #strip-prefix: false
+
+
+# URL 匹配关键字，如果包含关键字就跳转到指定的 URL 中
+#zuul:
+#  #prefix: /home #zuul网关访问服务的一个路径前缀
+#  routes:
+#    consumer: #自定义路由名
+#      path: /consumer/**   #zuul网关访问服务的一个路径 http://localhost:4001/consumer/
+#      url: http://localhost:3001/alive  #访问上面路径替换为这个
+
+
+
+######################## 路由指定:服务指定 2   #############################
+#zuul.routes 后面跟着的是服务名，服务名后面跟着的是路径规则，这种 配置方式更简单。
+#zuul:
+#  #prefix: /home  #zuul网关访问服务的一个路径前缀
+#  routes:
+#    user-consumer: #服务名
+#      path: /consumer/**   #zuul网关访问服务的一个路径
+#    user-provider: #服务名
+#      path: /provider/**
+
+
+#忽略微服务  user-provider不通过zuul访问
+#zuul:
+#  ignored-services: user-provider

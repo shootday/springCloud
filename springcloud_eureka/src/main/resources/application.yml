@@ -1,0 +1,44 @@
+#bootstrap.yml先加载  application.yml后加载
+#如果resource里面同时有bootstrap.yml 和 application.yml，且存在相同的配置，则application.yml会覆盖bootstrap.yml里面的属性，因为application.yml 会后加载，也就是说哪个文件被最后加载，哪个才具有最高级。（application会覆盖bootstrap中的非引导配置）
+
+spring:
+  application:
+    name: springcloud-eureka
+  #安全认证 密码用户
+#  security:
+#    user:
+#      name: admin
+#      password: 123
+server:
+  port: 8000
+
+#单节点
+eureka:
+  server:
+    #不读取只读的缓存服务清单，因为30秒刷新一次比较慢，读写高速缓存过期策略
+    #use-read-only-response-cache: false
+  # 配置关闭自我保护，并按需配置Eureka Server清理无效节点的时间间隔（5000ms）。
+    enable-self-preservation: false
+    #eviction-interval-timer-in-ms: 5000
+  instance:
+    hostname: localhost
+    #自定义元素据信息
+    metadata-map:
+      name: lizhixiang
+      age: 23
+  client:
+    #是否从eureka server 中获取注册信息，默认是ture  单点不需要为true
+    fetch-registry: false
+    #表示是否将自己注册到eureka server 默认是true  单点不需要为true
+    register-with-eureka: false
+    #设置 Eureka Server 所在的地址，查询服务和注册服务都需要依赖这个地址
+    service-url:
+      #集群时  hostname 端口不能相同 所以自己本地测试 配置hosts文件 看 bootstrap.yml配置集群
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+
+
+
+#或者多配置文件指定启动
+#spring:
+#  profiles:
+#    active: server2

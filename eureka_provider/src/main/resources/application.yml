@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: eureka-provider
+server:
+  port: 7001
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/ #http://admin:123@localhost:8000/eureka/   #集群 http://localhost:8001/eureka/,http://localhost:8002/eureka/,http://localhost:8000/eureka/
+   #上报服务的真实健康状态 如果不加-调用服务将health变为DOWN,但是注册中心中仍然会显示该服务的status为UP！
+    healthcheck:
+      enabled: true
+  instance:
+    metadata-map:
+      weight: 2
+
+management:
+  #开启所有上报端口
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  #开启shutdown端口 可以远程关闭当前节点
+  endpoint:
+    shutdown:
+      enabled: true
+
+#spring:
+#  profiles:
+#    active: s2
