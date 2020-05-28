@@ -28,6 +28,8 @@ spring_exception模块为统一异常处理  ErrorController  @ControllerAdvice
 
 spring_security模块为权限管理  security的使用  
 
+spring_database模块为基于数据库rbac的权限管理 
+
 
 
 
