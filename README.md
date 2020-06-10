@@ -30,6 +30,10 @@ spring_security模块为权限管理  security的使用
 
 spring_database模块为基于数据库rbac的权限管理 
 
+spring_jwt模块为jwt的使用 
+
+oauth2_1模块为security整合oauth
+
 
 
 
